@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const BannerEstilo = styled.div`
-max-width: 100%;
-padding: 100px 65px; 
+flex: 1;
+padding: 80px 65px; 
 position: relative;
 overflow: hidden;
 border-radius: 20px;
@@ -24,11 +24,15 @@ img {
    position: relative;
    z-index: 7;
    max-width: 301px;
+   height: 100%;
+   display: flex;
+   align-items: center;
 }
 
 .text p {
    color: #fff;
    font-size: 2.5rem;
+   margin: 0;
 }
 `
 
