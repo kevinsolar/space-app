@@ -7,6 +7,7 @@ const Figure = styled.figure`
    overflow: hidden;
    display: flex;
    flex-direction: column;
+   margin: 0;
 
    img {
       width: 100%;
@@ -48,17 +49,17 @@ const Figure = styled.figure`
    }
 `
 
-const Imagem = ({ src, titulo, fonte }) => {
+const Imagem = ({ foto, expandida = false, aoZoomSolicitado }) => {
    return (
-      <Figure>
-         <img src={src} alt="#" />
+      <Figure $expandida={expandida} id={`foto-${foto.id}`}>
+         <img src={foto.path} alt={foto.titulo} />
          <figcaption>
-            <h3>{titulo}</h3>
+            <h3>{foto.titulo}</h3>
             <footer>
-               <p>Fonte/{fonte}</p>
+               <p>Fonte/{foto.fonte}</p>
                <div className="btns">
                   <button><img src="/icones/favorite.svg" alt="#" /></button>
-                  <button><img src="/icones/expandir.svg" alt="#" /></button>
+                  {!expandida && <button aria-hidden={expandida} onClick={() => aoZoomSolicitado(foto)}><img src="/icones/expandir.svg" alt="#" /></button>}
                </div>
             </footer>
          </figcaption>
