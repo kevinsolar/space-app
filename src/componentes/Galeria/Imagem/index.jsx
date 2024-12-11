@@ -1,70 +1,68 @@
-import styled from "styled-components";
+import { styled } from "styled-components";
+import BotaoIcone from "../../BotaoIcone";
 
 const Figure = styled.figure`
-   width: ${(props) => (props.$expandida ? '90%' : '460px')};
-   height: 345px;
-   border-radius: 20px;
-   overflow: hidden;
-   display: flex;
-   flex-direction: column;
-   margin: 0;
+	width: ${(props) => (props.$expandida ? "90%" : "47%")};
+	max-width: 100%;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	& > img {
+		max-width: 100%;
+		border-radius: 20px 20px 0 0;
+	}
+	figcaption {
+		background-color: #001634;
+		border-radius: 0px 0px 20px 20px;
+		color: white;
+		box-sizing: border-box;
+		padding: 12px;
+		h3 {
+			font-family: "GandhiSansBold";
+		}
+		h4 {
+			flex-grow: 1;
+		}
+		h3,
+		h4 {
+			margin: 0;
+			font-size: 16px;
+		}
+	}
+`;
 
-   img {
-      width: 100%;
-      height: 75%;
-      object-fit: cover;
-      object-position: center;
-   }
+const Rodape = styled.footer`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+`;
 
-   figcaption {
-      background-color: #001634;
-      height: 25%;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 14px;
-   }
-   figcaption h3 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin: 0;
-   }
-   figcaption footer {
-      display: flex;
-      justify-content: space-between;
-   }
-   figcaption footer p {
-      font-size: 1rem;
-      margin: 0;
-   }
-   figcaption footer .btns {
-      display: flex;
-      gap: 10px;
-   }
-   figcaption footer button {
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-   }
-`
+const Imagem = ({ foto, expandida = false, aoZoomSolicitado, aoAlterarFavorito }) => {
 
-const Imagem = ({ foto, expandida = false, aoZoomSolicitado }) => {
-   return (
-      <Figure $expandida={expandida} id={`foto-${foto.id}`}>
-         <img src={foto.path} alt={foto.titulo} />
-         <figcaption>
-            <h3>{foto.titulo}</h3>
-            <footer>
-               <p>Fonte/{foto.fonte}</p>
-               <div className="btns">
-                  <button><img src="/icones/favorite.svg" alt="#" /></button>
-                  {!expandida && <button aria-hidden={expandida} onClick={() => aoZoomSolicitado(foto)}><img src="/icones/expandir.svg" alt="#" /></button>}
-               </div>
-            </footer>
-         </figcaption>
-      </Figure>
-   )
-}
+   const iconeFavorito = foto.favorita ? '/icones/favoritado.svg' : '/icones/favorite.svg'
+
+	return (
+		<Figure $expandida={expandida} id={`foto-${foto.id}`}>
+			<img src={foto.path} alt={foto.alt} />
+			<figcaption>
+				<h3>{foto.titulo}</h3>
+				<Rodape>
+					<h4>{foto.fonte}</h4>
+					<BotaoIcone onClick={() => aoAlterarFavorito(foto)}>
+						<img src={iconeFavorito} alt="Icone de favorito" />
+					</BotaoIcone>
+					{!expandida && (
+						<BotaoIcone
+							aria-hidden={expandida}
+							onClick={() => aoZoomSolicitado(foto)}
+						>
+							<img src="/icones/expandir.svg" alt="Icone de expandir" />
+						</BotaoIcone>
+					)}
+				</Rodape>
+			</figcaption>
+		</Figure>
+	);
+};
 
 export default Imagem;

@@ -5,7 +5,7 @@ import BarraLateral from "./componentes/BarraLateral";
 import Banner from "./componentes/Banner";
 import Galeria from "./componentes/Galeria";
 
-import fotos from './fotos.json';
+import fotos from "./fotos.json";
 import { useState } from "react";
 import ModalZoom from "./componentes/ModalZoom";
 
@@ -38,33 +38,57 @@ const Conteudos = styled.section`
 `;
 
 function App() {
+	const [fotosDaGaleria, setFotosDaGaleria] = useState(fotos);
+	const [fotoSelecionada, setFotoSelecionada] = useState(null);
 
-   const [fotosDaGaleria, setFotosDaGaleria] = useState(fotos)
-   const [fotoSelecionada, setFotoSelecionada] = useState(null)
+	const aoAlterarFavorito = (foto) => {
+		if (foto.id === fotoSelecionada?.id) {
+			setFotoSelecionada({
+				...fotoSelecionada,
+				favorita:
+					!fotoSelecionada.favorita
+			});
+		}
+		setFotosDaGaleria(
+			fotosDaGaleria.map((fotoGaleria) => {
+				return {
+					...fotoGaleria,
+					favorita:
+						fotoGaleria.id === foto.id
+							? !foto.favorita
+							: fotoGaleria.favorita,
+				};
+			})
+		);
+	};
 
-   return (
-      <FundoGradiente>
-         <EstiloGlobais />
+	return (
+		<FundoGradiente>
+			<EstiloGlobais />
 
-         <AppContainer>
-            <Header />
+			<AppContainer>
+				<Header />
 
-            <MainContainer>
-               <BarraLateral />
+				<MainContainer>
+					<BarraLateral />
 
-               <Conteudos>
-                  <Banner>A galeria mais completa de fotos do espaço!</Banner>
-                  <Galeria
-                     aoFotoSelecionada={foto => setFotoSelecionada(foto)}
-                     fotos={fotosDaGaleria}
-                  />
-               </Conteudos>
-
-            </MainContainer>
-         </AppContainer>
-         <ModalZoom foto={fotoSelecionada} />
-      </FundoGradiente>
-   );
+					<Conteudos>
+						<Banner>A galeria mais completa de fotos do espaço!</Banner>
+						<Galeria
+							aoFotoSelecionada={(foto) => setFotoSelecionada(foto)}
+							aoAlterarFavorito={aoAlterarFavorito}
+							fotos={fotosDaGaleria}
+						/>
+					</Conteudos>
+				</MainContainer>
+			</AppContainer>
+			<ModalZoom
+				foto={fotoSelecionada}
+				aoFechar={() => setFotoSelecionada(null)}
+				aoAlterarFavorito={aoAlterarFavorito}
+			/>
+		</FundoGradiente>
+	);
 }
 
 export default App;

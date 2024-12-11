@@ -18,7 +18,7 @@ const RowFotos = styled.div`
    gap: 1.5rem;
 `
 
-const Galeria = ({ fotos = [], aoFotoSelecionada }) => {
+const Galeria = ({ fotos = [], aoFotoSelecionada, aoAlterarFavorito }) => {
    return (
       <>
          <Tags />
@@ -32,6 +32,7 @@ const Galeria = ({ fotos = [], aoFotoSelecionada }) => {
                      key={foto.id}
                      foto={foto}
                      aoZoomSolicitado={aoFotoSelecionada}
+                     aoAlterarFavorito={aoAlterarFavorito}
                   />)}
                </RowFotos>
             </SecaoFluida>

@@ -35,7 +35,7 @@ const Populares = () => {
          <Titulo $alinhamento='center'>Populares</Titulo>
 
          <ColunaFotos>
-            {fotosPop.map(ft => <ImgPop src={ft.path} />)}
+            {fotosPop.map(ft => <ImgPop key={ft.id} src={ft.path} />)}
          </ColunaFotos>
 
          <Botao>Ver mais</Botao>
